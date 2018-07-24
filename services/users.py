@@ -55,7 +55,7 @@ def stuff():
   server_name = '172.31.19.18'
   domain_name = 'REDHAT'
   user_name = 'administrator'
-  password = '7mrfa)Lr@Vy'
+  password = 'un1x:.12'
 
   format_string = '{:25} {:>6} {:19} {:19} {}'
   print(format_string.format('User', 'Logins', 'Last Login', 'Expires', 'Description'))
