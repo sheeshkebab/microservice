@@ -45,7 +45,7 @@ def user_lists(username):
     return req.text
 
 
-@app.route('/ldap', methods=['GET'])
+@app.route('/users/ldap', methods=['GET'])
 def stuff():
   server_name = 'dc-etgrh.redhat.com.au'
   domain_name = 'REDHAT'
