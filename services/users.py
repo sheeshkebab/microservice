@@ -47,14 +47,16 @@ def user_lists(username):
 
 @app.route('/users/ldap', methods=['GET'])
 def stuff():
-  server_name = 'dc-etgrh.redhat.com.au'
+  mydict = {}
+  mydict['Users'] = []
+  server_name = '172.31.19.18'
   domain_name = 'REDHAT'
   user_name = 'administrator'
   password = '7mrfa)Lr@Vy'
-  
+
   format_string = '{:25} {:>6} {:19} {:19} {}'
   print(format_string.format('User', 'Logins', 'Last Login', 'Expires', 'Description'))
-  
+
   server = Server(server_name, get_info=ALL)
   conn = Connection(server, user='{}\\{}'.format(domain_name, user_name), password=password, authentication=NTLM, auto_bind=True)
   #conn.search('dc=REDHAT,dc=COM,dc=AU'.format(domain_name), '(objectclass=person)', attributes=[ALL_ATTRIBUTES, ALL_OPERATIONAL_ATTRIBUTES])
@@ -62,11 +64,14 @@ def stuff():
   for e in conn.entries:
       try:
           desc = e.description
-          print(format_string.format(str(e.name), str(e.logonCount), str(e.lastLogon)[:19], str(e.accountExpires)[:19], desc))
+          user = {"description":str(desc),"name":str(e.name)}
+          mydict['Users'].append(user)
       except LDAPCursorError:
           desc = ""
-  
-  print(format_string.format(str(e.name), str(e.logonCount), str(e.lastLogon)[:19], str(e.accountExpires)[:19], desc))
+
+  resp = make_response(json.dumps(mydict, sort_keys=True, indent=4))
+  resp.headers['Content-Type']="application/json"
+  return resp
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
