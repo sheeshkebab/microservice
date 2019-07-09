@@ -8,10 +8,10 @@ app = Flask(__name__)
 
 @app.route('/ldap', methods=['GET'])
 def stuff():
-	server_name = 'dc-etgrh.redhat.com.au'
-	domain_name = 'REDHAT'
+	server_name = 'dc-etgrh.xx.com.au'
+	domain_name = 'WORKGROUP'
 	user_name = 'administrator'
-	password = '7mrfa)Lr@Vy'
+	password = ''
 	 
 	format_string = '{:25} {:>6} {:19} {:19} {}'
 	print(format_string.format('User', 'Logins', 'Last Login', 'Expires', 'Description'))
@@ -28,4 +28,3 @@ def stuff():
 					desc = ""
 	 
 	print(format_string.format(str(e.name), str(e.logonCount), str(e.lastLogon)[:19], str(e.accountExpires)[:19], desc))
-
